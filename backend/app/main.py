@@ -4,7 +4,9 @@ from uuid import uuid4
 import logging
 import os
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks, Query
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, BackgroundTasks, Query, Request
+from fastapi.responses import JSONResponse
+import secrets
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import database
@@ -47,6 +49,23 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def require_backend_token(request: Request, call_next):
+    # All API traffic must arrive through the authenticated Vercel proxy.
+    if request.url.path.startswith("/api/"):
+        expected = settings.api_shared_secret
+        supplied = request.headers.get("x-backend-token", "")
+        if not expected or not secrets.compare_digest(supplied, expected):
+            return JSONResponse(status_code=401, content={"detail": "Unauthorized backend request."})
+    return await call_next(request)
+
+
+@app.get("/api/ai/status")
+def ai_status() -> dict:
+    model = settings.ollama_model if settings.ai_provider.strip().lower() == "ollama" else settings.openai_model
+    return {"provider": settings.ai_provider, "model": model, "status": "configured"}
 
 
 @app.get("/health")

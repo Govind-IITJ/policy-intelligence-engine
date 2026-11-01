@@ -1,6 +1,17 @@
-const DEFAULT_API_BASE_URL = 'http://127.0.0.1:8001'
+const DEFAULT_API_BASE_URL = import.meta.env.DEV ? 'http://127.0.0.1:8001' : '/api/backend'
 
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '')
+
+function getAppPassword() {
+  if (import.meta.env.DEV) return ''
+  let password = sessionStorage.getItem('pie_app_password')
+  if (!password) {
+    password = window.prompt('Enter the Policy Intelligence access password:')
+    if (!password) throw new Error('Access password is required.')
+    sessionStorage.setItem('pie_app_password', password)
+  }
+  return password
+}
 export const MAX_UPLOAD_MB = Number(import.meta.env.VITE_MAX_UPLOAD_MB || 20)
 
 async function request(path, options = {}) {
@@ -10,6 +21,7 @@ async function request(path, options = {}) {
       ...options,
       headers: {
         Accept: 'application/json',
+        ...(import.meta.env.DEV ? (import.meta.env.VITE_BACKEND_API_TOKEN ? { 'X-Backend-Token': import.meta.env.VITE_BACKEND_API_TOKEN } : {}) : { 'X-App-Password': getAppPassword() }),
         ...(options.headers || {}),
       },
     })

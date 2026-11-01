@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     ai_provider: str = "ollama"
 
     openai_api_key: str = ""
+    api_shared_secret: str = ""
     openai_model: str = "gpt-6-astra"
 
     ollama_base_url: str = "http://127.0.0.1:11434"

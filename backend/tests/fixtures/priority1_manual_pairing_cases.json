@@ -1,0 +1,58 @@
+{
+  "title": "Priority 1 clause-pairing regression fixtures",
+  "purpose": "Small human-review benchmark for subject correspondence, not a complete legal interpretation dataset.",
+  "cases": [
+    {
+      "id": "PMKISAN-2018-2020-NEG-001",
+      "source_pair": [
+        "OPERATIONAL GUIDELINES 2018.pdf",
+        "RevisedPM-KISANOperationalGuidelines(English) 2020.pdf"
+      ],
+      "earlier_page": 3,
+      "later_page": 5,
+      "earlier_excerpt": "01.02.2019 and no changes thereafter shall be considered for eligibility of benefit under the",
+      "later_excerpt": "Transferees are not entitled for any benefits under PM-KISAN in such cases.",
+      "expected_pairing_compatible": false,
+      "reason": "The earlier passage concerns a dated eligibility cut-off; the later passage concerns inheritance/transferee status. Exact quote location on each page does not make them the same provision."
+    },
+    {
+      "id": "PMEGP-2022-2023-POS-001",
+      "source_pair": [
+        "PMEGP_Full_Guidelines_2022_Archived.pdf",
+        "PMEGP_Revised_Guidelines_2023.pdf"
+      ],
+      "earlier_page": 26,
+      "later_page": 26,
+      "earlier_excerpt": "However, all the PMEGP units should be encouraged to registered under Udyam Portal",
+      "later_excerpt": "Besides, all the PMEGP units will have to be mandatorily registered under Udyam",
+      "expected_pairing_compatible": true,
+      "reason": "Both excerpts concern Udyam registration. The substantive obligation/force changes and still warrants checking the full clause."
+    },
+    {
+      "id": "PMEGP-2022-2023-POS-002",
+      "source_pair": [
+        "PMEGP_Full_Guidelines_2022_Archived.pdf",
+        "PMEGP_Revised_Guidelines_2023.pdf"
+      ],
+      "earlier_page": 33,
+      "later_page": 13,
+      "earlier_excerpt": "EDP training is a mandatory training to be undergone by beneficiary to be eligible for sanction",
+      "later_excerpt": "EDP training is mandatory for claiming the Margin Money subsidy. No EDP training will be mandatory for projects up to Rs. 2 lakh.",
+      "expected_pairing_compatible": true,
+      "reason": "Both excerpts concern EDP training; applicability and exceptions differ, so this is a provisional modification candidate requiring human review."
+    },
+    {
+      "id": "PMEGP-2022-2023-POS-003",
+      "source_pair": [
+        "PMEGP_Full_Guidelines_2022_Archived.pdf",
+        "PMEGP_Revised_Guidelines_2023.pdf"
+      ],
+      "earlier_page": 41,
+      "later_page": 14,
+      "earlier_excerpt": "As per the scheme guidelines, 100% physical verification is mandatory for all the unit's setup",
+      "later_excerpt": "100% physical verification with geo-tagging of the actual establishment and working status of each of the units set up under PMEGP will be done by KVIC.",
+      "expected_pairing_compatible": true,
+      "reason": "Both excerpts concern physical verification; automated matching must prevent a false removal, while human review determines exact scope/conditions."
+    }
+  ]
+}
